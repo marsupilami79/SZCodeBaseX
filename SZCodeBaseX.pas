@@ -1,6 +1,8 @@
 {$O+} // Optimization must be ON
 {$R-} // Range checking must be OFF
 
+{$ifdef FPC}{$mode delphi}{$ENDIF}
+
 unit SZCodeBaseX;
 
 /////////////////////////////
@@ -86,16 +88,16 @@ uses Windows, SysUtils, Types, Classes;
 // codes from Base2 to Base128
 //////////////////////////////////////////////////////////////////
 
-function SZEncodeBaseXMemory( pIN, pOUT: pByte; Size: integer; const Codes: String; BITS: integer; FullQuantum : integer; MIMELine: integer): integer;
-function SZDecodeBaseXMemory( pIN, pOUT: pByte; Size: integer; const Codes: string; BITS: integer): integer;
+function SZEncodeBaseXMemory( pIN, pOUT: pByte; Size: integer; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine: integer): integer;
+function SZDecodeBaseXMemory( pIN, pOUT: pByte; Size: integer; const Codes: AnsiString; BITS: integer): integer;
 
-function SZEncodeBaseXStream(sIN, sOUT: TStream; Size: integer; const Codes: String; BITS: integer; FullQuantum : integer; MIMELine: integer ): integer;
-function SZDecodeBaseXStream(sIN, sOUT: TStream; const Codes: String; BITS: integer): integer;
+function SZEncodeBaseXStream(sIN, sOUT: TStream; Size: integer; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine: integer ): integer;
+function SZDecodeBaseXStream(sIN, sOUT: TStream; const Codes: AnsiString; BITS: integer): integer;
 
-function SZEncodeBaseXString(const S: string; const Codes: string; BITS: integer; FullQuantum : integer; MIMELine: integer): string;
-function SZDecodeBaseXString(const S: string; const Codes: string; BITS: integer): string;
+function SZEncodeBaseXString(const S: AnsiString; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine: integer): AnsiString;
+function SZDecodeBaseXString(const S: AnsiString; const Codes: AnsiString; BITS: integer): AnsiString;
 
-function SZEncodeBaseXFile(const FileName: String; sOUT: TStream; const Codes: string; BITS: integer; FullQuantum : integer; MIMELine: integer): integer;
+function SZEncodeBaseXFile(const FileName: AnsiString; sOUT: TStream; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine: integer): integer;
 // Decoding entire file is not supported, as is not logical - file may
 // contain any data, or more than one encoded data
 // Use the stream realization for precise and logical decoding - even
@@ -116,20 +118,20 @@ function SZCalcRequiredPaddingKeys(Size, FullQuantum: integer):Integer;
 // Next two functions are for testing purposes only.
 // My be deleted in the future.
 ////////////////////////////////////////////////////////////////////
-function SZFullEncodeOnlyBase64(const S: string; MIMELine: integer = 0): string;
-function SZFullEncodeOnlyBase64_6(const S: string; MIMELine: integer = 0): string;
+function SZFullEncodeOnlyBase64(const S: AnsiString; MIMELine: integer = 0): AnsiString;
+function SZFullEncodeOnlyBase64_6(const S: AnsiString; MIMELine: integer = 0): AnsiString;
 
 ////////////////////////////////////////////////////////////////////
 // Base 16
 //////////////////////////////////////////////////////////////////
 function SZEncodeBase16(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZEncodeBase16(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZEncodeBase16(const S: string; MIMELine: integer = 0): string; overload;
-function SZEncodeBase16(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase16(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZEncodeBase16(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZDecodeBase16(pIN, pOUT: PByte; Size: integer): integer; overload;
 function SZDecodeBase16(sIN, sOUT: TStream): integer; overload;
-function SZDecodeBase16(const S: string): string; overload;
+function SZDecodeBase16(const S: AnsiString): AnsiString; overload;
 
 //////////////////////////////////////////////////////////////////
 // Base32, Full encoding mean adding padding keys
@@ -137,17 +139,17 @@ function SZDecodeBase16(const S: string): string; overload;
 
 function SZFullEncodeBase32(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZFullEncodeBase32(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZFullEncodeBase32(const S: string; MIMELine: integer = 0): string; overload;
-function SZFullEncodeBase32(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZFullEncodeBase32(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZFullEncodeBase32(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZEncodeBase32(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZEncodeBase32(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZEncodeBase32(const S: string; MIMELine: integer = 0): string; overload;
-function SZEncodeBase32(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase32(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZEncodeBase32(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZDecodeBase32(pIN, pOUT: PByte; Size: integer): integer; overload;
 function SZDecodeBase32(sIN, sOUT: TStream): integer; overload;
-function SZDecodeBase32(const S: string): string; overload;
+function SZDecodeBase32(const S: AnsiString): AnsiString; overload;
 
 //////////////////////////////////////////////////////////////////
 // Base 64, Full encoding mean adding padding keys
@@ -155,34 +157,34 @@ function SZDecodeBase32(const S: string): string; overload;
 
 function SZFullEncodeBase64(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZFullEncodeBase64(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZFullEncodeBase64(const S: string; MIMELine: integer = 0): string; overload;
-function SZFullEncodeBase64(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZFullEncodeBase64(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZFullEncodeBase64(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZEncodeBase64(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZEncodeBase64(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZEncodeBase64(const S: string; MIMELine: integer = 0): string; overload;
-function SZEncodeBase64(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase64(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZEncodeBase64(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZDecodeBase64(pIN, pOUT: PByte; Size: integer): integer; overload;
 function SZDecodeBase64(sIN, sOUT: TStream): integer; overload;
-function SZDecodeBase64(const S: string): string; overload;
+function SZDecodeBase64(const S: AnsiString): AnsiString; overload;
 
 //////////////////////////////////////////////////////////////////
 // Base64 URL, Full encoding mean adding padding keys
 //////////////////////////////////////////////////////////////////
 function SZFullEncodeBase64URL(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZFullEncodeBase64URL(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZFullEncodeBase64URL(const S: string; MIMELine: integer = 0): string; overload;
-function SZFullEncodeBase64URL(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZFullEncodeBase64URL(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZFullEncodeBase64URL(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZEncodeBase64URL(pIN, pOUT: PByte; Size: integer; MIMELine: integer = 0): integer; overload;
 function SZEncodeBase64URL(sIN, sOUT: TStream; Size: integer=-1; MIMELine: integer = 0): integer; overload;
-function SZEncodeBase64URL(const S: string; MIMELine: integer = 0): string; overload;
-function SZEncodeBase64URL(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase64URL(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
+function SZEncodeBase64URL(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 
 function SZDecodeBase64URL(pIN, pOUT: PByte; Size: integer): integer; overload;
 function SZDecodeBase64URL(sIN, sOUT: TStream): integer; overload;
-function SZDecodeBase64URL(const S: string): string; overload;
+function SZDecodeBase64URL(const S: AnsiString): AnsiString; overload;
 
 //////////////////////////////////////////////////////////////////
 // Calculating Required Output Memory
@@ -267,7 +269,7 @@ var
 // Basic Functions
 ////////////////////////////
 
-procedure SZUpdateFastDecodeTable(const Codes: string);
+procedure SZUpdateFastDecodeTable(const Codes: AnsiString);
 var
   i: integer;
 begin
@@ -365,7 +367,7 @@ end;
 ////////////////////////////
 
 
-function SZEncodeBaseXMemoryUpdate(pIN: PByte; var pOUT: PByte; Size: integer; const Codes: String; BITS: integer; var vB8, VI8: integer; MIMELine: integer; Var MIMECountdown, MIMEBytesCount: integer): integer;
+function SZEncodeBaseXMemoryUpdate(pIN: PByte; var pOUT: PByte; Size: integer; const Codes: AnsiString; BITS: integer; var vB8, VI8: integer; MIMELine: integer; Var MIMECountdown, MIMEBytesCount: integer): integer;
 {
   Universal Encode algorithm for Base16, Base32 and Base64
   Reference: RFC 3548
@@ -445,7 +447,7 @@ begin
   result:=Count;
 end;
                  
-function SZEncodeBaseXMemoryFinalyze(var pOUT: PByte; const Codes: String; BITS: integer; B8, I8: integer): integer;
+function SZEncodeBaseXMemoryFinalyze(var pOUT: PByte; const Codes: AnsiString; BITS: integer; B8, I8: integer): integer;
 // Finalyzing encoding with last left bites (if any)
 begin
   // If something left
@@ -458,7 +460,7 @@ begin
     result:=0;
 end;
 
-function SZEncodeBaseXMemory(pIN, pOUT: pByte; Size: integer; const Codes: String; BITS: integer; FullQuantum : integer; MIMELine : integer): integer;
+function SZEncodeBaseXMemory(pIN, pOUT: pByte; Size: integer; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine : integer): integer;
 var
   B8,I8: integer;
 
@@ -556,7 +558,7 @@ begin
   result:=Count;
 end;
 
-function SZDecodeBaseXMemory(pIN,pOUT: pByte; Size: integer; const Codes: string; BITS: integer): integer;
+function SZDecodeBaseXMemory(pIN,pOUT: pByte; Size: integer; const Codes: AnsiString; BITS: integer): integer;
 {
   Universal Decode algorithm for Base16, Base32 and Base64
   Reference: RFC 3548 - full compatibility
@@ -573,7 +575,7 @@ begin
   result:=SZDecodeBaseXMemoryUpdate( pIN, pOUT, Size, SZFastDecodeTable, BITS, B8, I8);
 end;
 
-function SZDecodeBaseXString(const S: string; const Codes: String; BITS: integer): String;
+function SZDecodeBaseXString(const S: AnsiString; const Codes: AnsiString; BITS: integer): AnsiString;
 var
   TotalIn  : integer;
   TotalOut : integer;
@@ -596,7 +598,7 @@ begin
     Setlength(Result,TotalOut);
 end;
 
-function SZEncodeBaseXString(const S: string; const Codes: string; BITS: integer; FullQuantum : integer ; MIMELine : integer): string;
+function SZEncodeBaseXString(const S: AnsiString; const Codes: AnsiString; BITS: integer; FullQuantum : integer ; MIMELine : integer): AnsiString;
 // Universal Encode algorithm for Base16, Base32 and Base64
 var
   pIN, pOUT: pByte;
@@ -624,7 +626,7 @@ end;
 // Stream
 //////////////////////////
 
-function SZEncodeBaseXStreamUpdate(sIN, sOUT: TStream; Size: integer; const Codes: String; BITS: integer; var vB8, vI8: integer; MIMELine: integer; Var MIMECountdown, MIMEByteCount: integer): integer;
+function SZEncodeBaseXStreamUpdate(sIN, sOUT: TStream; Size: integer; const Codes: AnsiString; BITS: integer; var vB8, vI8: integer; MIMELine: integer; Var MIMECountdown, MIMEByteCount: integer): integer;
 var
   pBuffIn, pBuffOut: pByte;
   Res,BUFF : Integer;
@@ -680,7 +682,7 @@ begin
   result:=Count;
 end;
 
-function SZEncodeBaseXStreamFinalyze(sOUT: TStream; const Codes: String; BITS: integer; var B8, I8: integer): integer;
+function SZEncodeBaseXStreamFinalyze(sOUT: TStream; const Codes: AnsiString; BITS: integer; var B8, I8: integer): integer;
 var
   pOut: pByte;
   b: byte;
@@ -693,7 +695,7 @@ begin
     sOut.Write(b,Result);
 end;
 
-function SZEncodeBaseXStream(sIN, sOUT: TStream; Size: integer; const Codes: String; BITS: integer; FullQuantum : integer; MIMELine : integer): integer;
+function SZEncodeBaseXStream(sIN, sOUT: TStream; Size: integer; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine : integer): integer;
 var
   B8,I8: integer;
 
@@ -746,7 +748,7 @@ begin
   result:=TotalOut;
 end;
 
-function SZDecodeBaseXStream(sIN, sOUT: TStream;  const Codes: String; BITS: integer): integer;
+function SZDecodeBaseXStream(sIN, sOUT: TStream;  const Codes: AnsiString; BITS: integer): integer;
 var
   TotalIn  : integer;
   TotalOut : integer;
@@ -802,7 +804,7 @@ begin
   result:=Count;
 end;
 
-function SZEncodeBaseXFile(const FileName: String; sOUT: TStream; const Codes: string; BITS: integer; FullQuantum : integer; MIMELine: integer ): integer;
+function SZEncodeBaseXFile(const FileName: AnsiString; sOUT: TStream; const Codes: AnsiString; BITS: integer; FullQuantum : integer; MIMELine: integer ): integer;
 var
   sIn: TFileStream;
   Size: integer;
@@ -822,37 +824,37 @@ end;
 // File to stream
 ///////////////////////////////////////////////////
 
-function SZFullEncodeBase64(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZFullEncodeBase64(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes64, SZBITS64, SZFullQuantum64, MIMELine);
 end;
 
-function SZFullEncodeBase64URL(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZFullEncodeBase64URL(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes64URL, SZBITS64, SZFullQuantum64, MIMELine);
 end;
 
-function SZEncodeBase64(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase64(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes64, SZBITS64, SZFullQuantum0, MIMELine);
 end;
 
-function SZEncodeBase64URL(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase64URL(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes64URL, SZBITS64, SZFullQuantum0, MIMELine);
 end;
 
-function SZFullEncodeBase32(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZFullEncodeBase32(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes32, SZBITS32, SZFullQuantum32, MIMELine);
 end;
 
-function SZEncodeBase32(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase32(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes32, SZBITS32, SZFullQuantum0, MIMELine);
 end;
 
-function SZEncodeBase16(const FileName: String; sOUT: TStream; MIMELine: integer = 0): integer; overload;
+function SZEncodeBase16(const FileName: AnsiString; sOUT: TStream; MIMELine: integer = 0): integer; overload;
 begin
   result:=SZEncodeBaseXFile(FileName, sOUT, SZCodes16, SZBITS16, SZFullQuantum0, MIMELine);
 end;
@@ -861,7 +863,7 @@ end;
 ///    Base16
 ////////////////////////////////////////////////////////////
 
-function SZFullEncodeBase16(const S: string; MIMELine: integer = 0): string;  overload;
+function SZFullEncodeBase16(const S: AnsiString; MIMELine: integer = 0): AnsiString;  overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes16, SZBITS16, SZFullQuantum0, MIMELine)
 end;
@@ -876,7 +878,7 @@ begin
   result:=SZEncodeBaseXStream(sIN, sOUT, Size, SZCodes16, SZBITS16, SZFullQuantum0, MIMELine);
 end;
 
-function SZEncodeBase16(const S: string; MIMELine: integer = 0): string; overload;
+function SZEncodeBase16(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes16, SZBITS16, SZFullQuantum0, MIMELine)
 end;
@@ -891,7 +893,7 @@ begin
   result:= SZDecodeBaseXStream(sIN,sOUT, SZCodes16, SZBITS16);
 end;
 
-function SZDecodeBase16(const S: string): string; overload;
+function SZDecodeBase16(const S: AnsiString): AnsiString; overload;
 begin
   Result:=SZDecodeBaseXString(S, SZCodes16, SZBITS16)
 end;
@@ -910,7 +912,7 @@ begin
   result:=SZEncodeBaseXStream(sIN,sOUT, Size, SZCodes32, SZBITS32, SZFullQuantum32, MIMELine);
 end;
 
-function SZFullEncodeBase32(const S: string; MIMELine: integer = 0): string; overload;
+function SZFullEncodeBase32(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes32, SZBITS32, SZFullQuantum32, MIMELine);
 end;
@@ -925,7 +927,7 @@ begin
   result:=SZEncodeBaseXStream(sIN,sOUT, Size, SZCodes32, SZBITS32, SZFullQuantum0, MIMELine);
 end;
 
-function SZEncodeBase32(const S: string; MIMELine: integer = 0): string; overload;
+function SZEncodeBase32(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes32, SZBITS32, SZFullQuantum0, MIMELine)
 end;
@@ -940,7 +942,7 @@ begin
   result:=SZDecodeBaseXStream(sIN,sOUT, SZCodes32, SZBITS32);
 end;
 
-function SZDecodeBase32(const S: string): string; overload;
+function SZDecodeBase32(const S: AnsiString): AnsiString; overload;
 begin
   Result:=SZDecodeBaseXString(S, SZCodes32, SZBITS32)
 end;
@@ -958,7 +960,7 @@ begin
   result:=SZEncodeBaseXStream(sIN,sOUT, Size, SZCodes64, SZBITS64, SZFullQuantum64, MIMELine);
 end;
 
-function SZFullEncodeBase64(const S: string; MIMELine: integer = 0): string;  overload;
+function SZFullEncodeBase64(const S: AnsiString; MIMELine: integer = 0): AnsiString;  overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes64, SZBITS64, SZFullQuantum64, MIMELine)
 end;
@@ -973,7 +975,7 @@ begin
   result:=SZEncodeBaseXStream(sIN,sOUT, Size, SZCodes64, SZBITS64, SZFullQuantum0, MIMELine);
 end;
 
-function SZEncodeBase64(const S: string; MIMELine: integer = 0): string; overload;
+function SZEncodeBase64(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes64, SZBITS64, SZFullQuantum0, MIMELine)
 end;
@@ -988,7 +990,7 @@ begin
   result:=SZDecodeBaseXStream(sIN,sOUT, SZCodes64, SZBITS64);
 end;
 
-function SZDecodeBase64(const S: string): string; overload;
+function SZDecodeBase64(const S: AnsiString): AnsiString; overload;
 begin
   Result:=SZDecodeBaseXString(S, SZCodes64, SZBITS64)
 end;
@@ -1007,7 +1009,7 @@ begin
   result:=SZEncodeBaseXStream(sIN,sOUT, Size, SZCodes64URL, SZBITS64, SZFullQuantum64, MIMELine);
 end;
 
-function SZFullEncodeBase64URL(const S: string; MIMELine: integer = 0): string; overload;
+function SZFullEncodeBase64URL(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes64URL, SZBITS64, SZFullQuantum64, MIMELine)
 end;
@@ -1017,7 +1019,7 @@ begin
   result:=SZEncodeBaseXMemory(pIN, pOUT, Size, SZCodes64URL, SZBITS64, SZFullQuantum0, MIMELine);
 end;
 
-function SZEncodeBase64URL(const S: string; MIMELine: integer = 0): string; overload;
+function SZEncodeBase64URL(const S: AnsiString; MIMELine: integer = 0): AnsiString; overload;
 begin
   Result:=SZEncodeBaseXString(S, SZCodes64URL, SZBITS64, SZFullQuantum0, MIMELine)
 end;
@@ -1037,7 +1039,7 @@ begin
   result:=SZDecodeBaseXStream(sIN,sOUT, SZCodes64URL, SZBITS64);
 end;
 
-function SZDecodeBase64URL(const S: string): string; overload;
+function SZDecodeBase64URL(const S: AnsiString): AnsiString; overload;
 begin
   Result:=SZDecodeBaseXString(S, SZCodes64URL, SZBITS64)
 end;
@@ -1138,7 +1140,7 @@ const
     119, 120, 121, 122, 048, 049, 050, 051,
     052, 053, 054, 055, 056, 057, 043, 047);
 
-function SZFullEncodeOnlyBase64(const S: string; MIMELine: integer = 0): string;
+function SZFullEncodeOnlyBase64(const S: AnsiString; MIMELine: integer = 0): AnsiString;
 {
  Encode algorithm for Base64
  Reference: RFC 3548 - full compatibility
@@ -1218,7 +1220,7 @@ begin
 end;
 
 
-function SZFullEncodeOnlyBase64_6(const S: string; MIMELine: integer = 0): string;
+function SZFullEncodeOnlyBase64_6(const S: AnsiString; MIMELine: integer = 0): AnsiString;
 {
  Encode algorithm for Base64
  Reference: RFC 3548 - full compatibility
